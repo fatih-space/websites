@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Website - Muhammad Fatih</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%233B6FD4'/%3E%3Ctext x='50' y='66' font-family='Fraunces, serif' font-size='44' font-weight='700' text-anchor='middle' fill='white'%3EMF%3C/text%3E%3C/svg%3E">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0B3D91;
+            --secondary: #4B5563;
+            --accent: #FFC107;
+            --bg: #F4F6F8;
+            --text: #0B1220;
+            --success: #22C55E;
+            --danger: #EF4444;
+        }
+
+        * {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            scroll-behavior: smooth;
+            box-sizing: border-box;
+        }
+
+        /* ── Gradient helpers ── */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .name-highlight {
+            background: linear-gradient(90deg, #ffb812 0%, #FFB703 60%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+        }
+        .name-foot {
+            background: linear-gradient(90deg, #fcc729 0%, #faca3b 60%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 500;
+        }
+        .school-link {
+            background: linear-gradient(90deg, #FFD166 0%, #FFB703 60%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            text-decoration: underline;
+            text-decoration-color: rgba(255,255,255,0.2);
+        }
+
+        /* ── Navbar ── */
+        .nav-link {
+            position: relative;
+            transition: color 0.2s ease;
+            color: #374151;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.25s ease;
+        }
+        .nav-link:hover { color: var(--primary); }
+        .nav-link:hover::after { width: 100%; }
+
+        /* ── Hero ── */
+        .hero-gradient { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
+
+        /* Profile circle — fully responsive */
+        .profile-circle {
+            width: min(22rem, 88vw);
+            height: min(22rem, 88vw);
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(12px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        .profile-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(-14px); }
+        }
+        .float-animation { animation: float 3s ease-in-out infinite; }
+
+        /* ── Cards ── */
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 36px rgba(11,18,32,0.10);
+        }
+
+        /* ── Skill tags ── */
+        .skill-tag {
+            background: var(--primary);
+            border: 1px solid rgba(11,61,145,0.12);
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+        .skill-tag-soft {
+            background: #e676d7;
+            border: 1px solid #e676d7;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+        .skill-tag:hover, .skill-tag-soft:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        /* ── Buttons ── */
+        .btn-primary {
+            background: var(--accent);
+            color: var(--text);
+            padding: .45rem .9rem;
+            border-radius: 999px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            gap: .5rem;
+        }
+        .btn-primary:hover { filter: brightness(.95); }
+
+        .contact-btn {
+            background: var(--primary);
+            color: #fff;
+            padding: .65rem;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .2s ease;
+        }
+        .contact-btn:hover { opacity: .9; transform: translateY(-3px); }
+
+        /* ── Expand / more-projects ── */
+        .more-projects {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.8s ease-in-out, opacity 0.5s ease-in-out;
+            opacity: 0;
+        }
+        .more-projects.show { max-height: 9999px; opacity: 1; }
+
+        .btn-expand i { transition: transform 0.3s ease; }
+        .btn-expand.active i { transform: rotate(180deg); }
+
+        /* ── School logo ── */
+        .school-logo {
+            display: block;
+            margin: 0 auto;
+            width: clamp(72px, 14vw, 160px);
+            height: auto;
+            filter: grayscale(100%);
+            transition: filter .25s ease, transform .2s ease;
+            cursor: pointer;
+        }
+        .school-logo:hover { filter: none; transform: scale(1.04); }
+
+        /* ── Scroll-to-top ── */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 28px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            background-color: #0B3D91;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px rgba(11,61,145,0.35);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        .scroll-to-top:hover { background-color: #faca3b; color: #0B1220; transform: translateY(-4px); }
+        .scroll-to-top.show { display: flex; }
+        .scroll-to-top svg { width: 22px; height: 22px; }
+
+        /* ── Gallery ── */
+        @keyframes galPop {
+            from { transform: scale(.85); opacity: 0; }
+            to   { transform: scale(1);   opacity: 1; }
+        }
+        .gal-card-img { width:100%; height:100%; object-fit:cover; display:block; transition:filter .25s; }
+        .gal-card:hover .gal-card-img { filter: brightness(.72); }
+        .gal-cap-overlay {
+            position:absolute; inset:0;
+            background:linear-gradient(to top,rgba(10,18,30,.65) 0%,transparent 52%);
+            display:flex; align-items:flex-end; padding:12px;
+            opacity:0; transition:opacity .22s;
+        }
+        .gal-card:hover .gal-cap-overlay { opacity:1; }
+        .gal-lb-img { width:100%; height:100%; object-fit:contain; display:block; }
+        .gal-lb-ph {
+            width:100%; height:100%;
+            display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+        }
+
+        /* ──────────────────────────────────────────
+           RESPONSIVE BREAKPOINTS
+        ────────────────────────────────────────── */
+
+        /* Mobile first — base styles already handle small screens.
+           Additional tweaks below: */
+
+        /* Hero section stacking on mobile */
+        @media (max-width: 767px) {
+            /* Show profile on mobile too (remove hidden) */
+            .mobile-profile-show { display: flex !important; }
+
+            /* Hero text sizing */
+            #home h1.name-size { font-size: clamp(1.6rem, 6vw, 2.4rem); }
+            #home p.school-size { font-size: clamp(0.9rem, 3.5vw, 1.1rem); }
+
+            /* Section padding tighter on mobile */
+            section { padding-top: 3.5rem !important; padding-bottom: 3.5rem !important; }
+            nav .container { padding-left: 1rem; padding-right: 1rem; }
+
+            /* Cards in single column */
+            .grid-responsive-1 { grid-template-columns: 1fr !important; }
+
+            /* Scroll-to-top smaller + closer edge */
+            .scroll-to-top { bottom: 18px; right: 14px; width: 42px; height: 42px; }
+        }
+
+        /* Tablet */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            #home h1.name-size { font-size: clamp(2rem, 4vw, 3rem); }
+        }
+
+        /* Full HD — 1920×1080 */
+        @media (min-width: 1536px) {
+            .container { max-width: 1400px !important; }
+            #home h1.name-size { font-size: 3.8rem; }
+            .hero-gradient { min-height: 100vh; }
+            .profile-circle { width: 26rem; height: 26rem; }
+        }
+
+        /* 4K guard — prevent content stretching on very wide screens */
+        @media (min-width: 1920px) {
+            .container { max-width: 1600px !important; }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+
+    <!-- ══════════════ NAVBAR ══════════════ -->
+    <nav class="fixed w-full bg-white/75 backdrop-blur-md shadow-sm z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="#home" class="text-2xl font-bold gradient-text">muhammadfatih</a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home"      class="nav-link">Beranda</a>
+                    <a href="#about"     class="nav-link">Tentang</a>
+                    <a href="#portfolio" class="nav-link">Portfolio</a>
+                    <a href="#education" class="nav-link">Pendidikan</a>
+                    <a href="#blog"      class="nav-link">Blog</a>
+                    <a href="#contact"   class="nav-link">Kontak</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-gray-700 p-2">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 border-t border-gray-100 pt-3">
+                <a href="#home"      class="block py-2.5 nav-link text-base">Beranda</a>
+                <a href="#about"     class="block py-2.5 nav-link text-base">Tentang</a>
+                <a href="#portfolio" class="block py-2.5 nav-link text-base">Portfolio</a>
+                <a href="#education" class="block py-2.5 nav-link text-base">Pendidikan</a>
+                <a href="#blog"      class="block py-2.5 nav-link text-base">Blog</a>
+                <a href="#contact"   class="block py-2.5 nav-link text-base">Kontak</a>
+                <a href="#gallery"   class="block py-2.5 nav-link text-base">Galeri</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ══════════════ HERO ══════════════ -->
+    <section id="home" class="min-h-screen flex items-center hero-gradient pt-20">
+        <div class="container mx-auto px-4 sm:px-6 py-12 sm:py-16">
+            <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+
+                <!-- Text -->
+                <div class="text-white text-center md:text-left">
+                    <h1 class="name-size text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight">
+                        <span class="name-highlight">Muhammad Fatih Nur Rosyid</span>
+                    </h1>
+                    <p class="school-size text-base sm:text-lg md:text-xl mb-4 leading-relaxed" style="color:rgba(255,255,255,.95);">
+                        Siswa Mekatronika
+                        <a href="https://www.smtijogja.sch.id" target="_blank" rel="noopener noreferrer" class="school-link">
+                            SMK-SMTI YOGYAKARTA
+                        </a>.
+                    </p>
+                    <!-- Profile circle — visible only on mobile (md:hidden) -->
+                    <div class="flex justify-center mt-6 md:hidden">
+                        <div class="float-animation">
+                            <div class="profile-circle" style="width:min(16rem,72vw);height:min(16rem,72vw);">
+                                <img src="foto/profil.png" alt="foto profil">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile circle — desktop only -->
+                <div class="hidden md:flex justify-center">
+                    <div class="float-animation">
+                        <div class="profile-circle">
+                            <img src="foto/profil.png" alt="foto profil">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════ ABOUT ══════════════ -->
+    <section id="about" class="py-16 sm:py-20 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold gradient-text mb-4 pb-1">Tentang Saya</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-10 md:gap-12 items-start">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold mb-5">Calon Praktisi Mekatronika</h2>
+                    <p class="text-gray-800 mb-5 leading-relaxed text-sm sm:text-base">
+                        Saya merupakan siswa Teknik Mekatronika di SMK SMTI Yogyakarta. Saya sangat tertarik dengan dunia mekanik dan sistem otomasi industri. Selama sekolah, saya belajar bagaimana cara kerja mesin manufaktur dan cara mencari solusi teknis untuk masalah di lapangan. Saya orang yang hobi belajar hal baru dan siap memberikan kontribusi terbaik di dunia industri.
+                    </p>
+
+                    <h4 class="text-xl sm:text-2xl font-bold mb-4 gradient-text">Profil Keahlian</h4>
+                    <div class="flex flex-wrap gap-2 sm:gap-3 mb-6">
+                        <span class="skill-tag-soft px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium">Problem Solving</span>
+                        <span class="skill-tag-soft px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium">Teamwork</span>
+                        <span class="skill-tag-soft px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium">Disiplin SOP & K3</span>
+                        <span class="skill-tag-soft px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium">Adaptif</span>
+                        <span class="skill-tag px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium">PLC Programming</span>
+                        <span class="skill-tag px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium">Pneumatics</span>
+                        <span class="skill-tag px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium">Electrical</span>
+                        <span class="skill-tag px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium">Digital Drawing</span>
+                        <span class="skill-tag px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium">Milling & Lathe</span>
+                    </div>
+                </div>
+
+                <!-- Feature cards — 2 columns always, stack to 1 on very small -->
+                <div class="grid grid-cols-2 gap-4 sm:gap-6">
+                    <div class="bg-gradient-to-br from-blue-200 to-cyan-200 p-4 sm:p-6 rounded-xl card-hover">
+                        <i class="fas fa-pencil-ruler text-3xl sm:text-4xl text-blue-600 mb-3"></i>
+                        <h4 class="text-base sm:text-xl font-bold mb-2">Technical drawing</h4>
+                        <p class="text-gray-600 text-xs sm:text-sm">Membuat gambar kerja 2D & 3D (AutoCAD, SolidWorks, Mastercam, Inventor).</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-200 to-blue-200 p-4 sm:p-6 rounded-xl card-hover">
+                        <i class="fas fa-tools text-3xl sm:text-4xl text-purple-600 mb-3"></i>
+                        <h4 class="text-base sm:text-xl font-bold mb-2">Pemeliharaan Mesin</h4>
+                        <p class="text-gray-600 text-xs sm:text-sm">Memahami prosedur Maintenance dan teknik troubleshooting pada sistem mesin industri.</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-indigo-200 to-purple-200 p-4 sm:p-6 rounded-xl card-hover">
+                        <i class="fas fa-microchip text-3xl sm:text-4xl text-indigo-600 mb-3"></i>
+                        <h4 class="text-base sm:text-xl font-bold mb-2">Otomasi & Kontrol</h4>
+                        <p class="text-gray-600 text-xs sm:text-sm">Wiring & pemrograman kontrol (PLC-Pneumatik)</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-cyan-200 to-blue-200 p-4 sm:p-6 rounded-xl card-hover">
+                        <i class="fas fa-industry text-3xl sm:text-4xl text-cyan-600 mb-3"></i>
+                        <h4 class="text-base sm:text-xl font-bold mb-2">Produksi</h4>
+                        <p class="text-gray-600 text-xs sm:text-sm">Operasional mesin lathe/milling & Assembly komponen.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════ PORTFOLIO ══════════════ -->
+    <section id="portfolio" class="py-16 sm:py-20 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold gradient-text mb-4 pb-1">Projects</h2>
+            </div>
+
+            <!-- Always-visible projects -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-xl card-hover">
+                    <div class="h-40 sm:h-48 bg-gradient-to-br from-green-400 to-yellow-500 flex items-center justify-center">
+                        <i class="fas fa-train text-white text-5xl sm:text-6xl"></i>
+                    </div>
+                    <div class="p-4 sm:p-6">
+                        <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">Simulasi Palang Kereta Otomatis</h3>
+                        <p class="text-gray-600 mb-4 text-xs sm:text-sm">Membuat simulasi sistem palang kereta otomatis menggunakan PLC dan Ladder Diagram untuk mengontrol sensor dan aktuator secara otomatis.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">PLC</span>
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">Automation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-xl card-hover">
+                    <div class="h-40 sm:h-48 bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center">
+                        <i class="fas fa-industry text-white text-5xl sm:text-6xl"></i>
+                    </div>
+                    <div class="p-4 sm:p-6">
+                        <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">Simulasi Distributing Station (PLC)</h3>
+                        <p class="text-gray-600 mb-4 text-xs sm:text-sm">Simulasi sistem distribusi benda kerja menggunakan PLC dan electro-pneumatic dengan integrasi sensor, solenoid valve, dan silinder pneumatik.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">PLC</span>
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">Electro Pneumatic</span>
+                            <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs">Automation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-xl card-hover">
+                    <div class="h-40 sm:h-48 bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center">
+                        <i class="fas fa-tools text-white text-5xl sm:text-6xl"></i>
+                    </div>
+                    <div class="p-4 sm:p-6">
+                        <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">Pembuatan Hammer</h3>
+                        <p class="text-gray-600 mb-4 text-xs sm:text-sm">Proses manufaktur dasar logam menggunakan teknik kikir, drilling, pembentukan menggunakan mesin bubut, dan proses heat treatment.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">Machining</span>
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">Lathe Machine</span>
+                            <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs">Heat Treatment</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-xl card-hover">
+                    <div class="h-40 sm:h-48 bg-gradient-to-br from-green-400 to-teal-500 flex items-center justify-center">
+                        <i class="fas fa-drafting-compass text-white text-5xl sm:text-6xl"></i>
+                    </div>
+                    <div class="p-4 sm:p-6">
+                        <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">Desain Gambar Teknik CAD</h3>
+                        <p class="text-gray-600 mb-4 text-xs sm:text-sm">Mendesain komponen Push Button Switch DPDT menggunakan software CAD dengan standar proyeksi.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">CAD</span>
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">Engineering Drawing</span>
+                            <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs">Technical Design</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-xl card-hover">
+                    <div class="h-40 sm:h-48 bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
+                        <i class="fas fa-hammer text-white text-5xl sm:text-6xl"></i>
+                    </div>
+                    <div class="p-4 sm:p-6">
+                        <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">Pembuatan Rak Tas</h3>
+                        <p class="text-gray-600 mb-4 text-xs sm:text-sm">Pembuatan rangka logam menggunakan mesin cut-off untuk pemotongan, welding untuk perakitan, dan proses painting sebagai finishing.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">Cutting</span>
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">Welding</span>
+                            <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs">Fabrication</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-xl card-hover">
+                    <div class="h-40 sm:h-48 bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center">
+                        <i class="fas fa-globe text-white text-5xl sm:text-6xl"></i>
+                    </div>
+                    <div class="p-4 sm:p-6">
+                        <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">Personal Website</h3>
+                        <p class="text-gray-600 mb-4 text-xs sm:text-sm">Mengembangkan website pribadi sebagai media profil, portfolio proyek, serta eksplorasi teknologi web dengan prompt engineering.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">HTML</span>
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">Tailwind</span>
+                            <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- More Projects (hidden) -->
+            <div id="moreProjects" class="more-projects mt-6 sm:mt-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pb-8">
+
+                    <div class="bg-white rounded-xl shadow-xl overflow-hidden card-hover">
+                        <div class="h-40 sm:h-48 bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center">
+                            <i class="fas fa-bolt text-white text-5xl sm:text-6xl"></i>
+                        </div>
+                        <div class="p-4 sm:p-6">
+                            <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">Box Panel Listrik</h3>
+                            <p class="text-gray-600 text-xs sm:text-sm mb-4">Membuat box panel listrik untuk trainer kelistrikan.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">Electrical</span>
+                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">Control Panel</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coming soon cards -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-xl card-hover opacity-80">
+                        <div class="h-40 sm:h-48 bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center">
+                            <i class="fas fa-hourglass-half text-white text-5xl sm:text-6xl"></i>
+                        </div>
+                        <div class="p-4 sm:p-6">
+                            <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">Coming Soon</h3>
+                            <p class="text-gray-600 mb-4 text-xs sm:text-sm">Proyek baru sedang dalam tahap pengembangan. Nantikan update selanjutnya.</p>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs">Coming Soon</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl overflow-hidden shadow-xl card-hover opacity-80">
+                        <div class="h-40 sm:h-48 bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center">
+                            <i class="fas fa-hourglass-half text-white text-5xl sm:text-6xl"></i>
+                        </div>
+                        <div class="p-4 sm:p-6">
+                            <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">Coming Soon</h3>
+                            <p class="text-gray-600 mb-4 text-xs sm:text-sm">Proyek baru sedang dalam tahap pengembangan. Nantikan update selanjutnya.</p>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs">Coming Soon</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl overflow-hidden shadow-xl card-hover opacity-80">
+                        <div class="h-40 sm:h-48 bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center">
+                            <i class="fas fa-hourglass-half text-white text-5xl sm:text-6xl"></i>
+                        </div>
+                        <div class="p-4 sm:p-6">
+                            <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">Coming Soon</h3>
+                            <p class="text-gray-600 mb-4 text-xs sm:text-sm">Proyek baru sedang dalam tahap pengembangan. Nantikan update selanjutnya.</p>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs">Coming Soon</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl overflow-hidden shadow-xl card-hover opacity-80">
+                        <div class="h-40 sm:h-48 bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center">
+                            <i class="fas fa-hourglass-half text-white text-5xl sm:text-6xl"></i>
+                        </div>
+                        <div class="p-4 sm:p-6">
+                            <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">Coming Soon</h3>
+                            <p class="text-gray-600 mb-4 text-xs sm:text-sm">Proyek baru sedang dalam tahap pengembangan. Nantikan update selanjutnya.</p>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs">Coming Soon</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl overflow-hidden shadow-xl card-hover opacity-80">
+                        <div class="h-40 sm:h-48 bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center">
+                            <i class="fas fa-hourglass-half text-white text-5xl sm:text-6xl"></i>
+                        </div>
+                        <div class="p-4 sm:p-6">
+                            <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">Coming Soon</h3>
+                            <p class="text-gray-600 mb-4 text-xs sm:text-sm">Proyek baru sedang dalam tahap pengembangan. Nantikan update selanjutnya.</p>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs">Coming Soon</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Expand button -->
+            <div class="text-center mt-4">
+                <button id="expandBtn"
+                    class="btn-expand bg-gradient-to-r from-blue-800 to-blue-900 text-white px-6 sm:px-8 py-3 rounded-full font-semibold hover:from-blue-700 hover:to-blue-800 shadow-lg hover:shadow-xl inline-flex items-center gap-3 text-sm sm:text-base">
+                    <span id="btnText">Lihat Project Lainnya</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════ EDUCATION ══════════════ -->
+    <section id="education" class="py-16 sm:py-20 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="flex items-center justify-center">
+                <div class="text-center">
+                    <h2 class="text-3xl sm:text-4xl font-bold gradient-text mb-8">Pendidikan</h2>
+                    <a href="https://www.smtijogja.sch.id" target="_blank" rel="noopener noreferrer">
+                        <img src="foto/Logo SMTI Yk Transparan.png" alt="Logo SMK-SMTI Yogyakarta" class="school-logo mb-4">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════ BLOG / DIGITAL SHOWCASE ══════════════ -->
+    <section id="blog" class="py-16 sm:py-20 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold gradient-text mb-4 pb-1">Digital Showcase</h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-xl card-hover">
+                    <div class="h-40 sm:h-48 bg-gradient-to-br from-purple-400 to-blue-500 flex items-center justify-center">
+                        <i class="fas fa-align-left text-white text-5xl sm:text-6xl"></i>
+                    </div>
+                    <div class="p-4 sm:p-6">
+                        <div class="flex items-center gap-2 text-xs sm:text-sm text-gray-500 mb-3">
+                            <i class="fas fa-calendar"></i>
+                            <span>22 Februari 2026</span>
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">RuangKata — Analitik Teks Real-Time</h3>
+                        <p class="text-gray-600 mb-4 text-xs sm:text-sm">Tools penghitung kata berbasis web dengan fitur analitik lengkap: jumlah kata, karakter, kalimat, paragraf, estimasi waktu baca, pencarian kata, hingga kepadatan kata kunci — semua gratis dan tanpa batas.</p>
+                        <a href="https://fatih-space.github.io/ruangkata/index.html" target="_blank" rel="noopener noreferrer" class="gradient-text font-semibold text-sm">
+                            Kunjungi Situs <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-xl card-hover">
+                    <div class="h-40 sm:h-48 bg-gradient-to-br from-purple-400 to-blue-500 flex items-center justify-center">
+                        <i class="fas fa-book-open text-white text-5xl sm:text-6xl"></i>
+                    </div>
+                    <div class="p-4 sm:p-6">
+                        <div class="flex items-center gap-2 text-xs sm:text-sm text-gray-500 mb-3">
+                            <i class="fas fa-calendar"></i>
+                            <span>21 Februari 2026</span>
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">Selamat Datang di CerpenKu</h3>
+                        <p class="text-gray-600 mb-4 text-xs sm:text-sm">CerpenKu adalah platform cerpen Indonesia yang menghadirkan lebih dari 20 cerita pendek dalam berbagai genre — dari romance, horor, komedi, hingga inspiratif. Gratis, tanpa batas, dan siap menemani harimu kapan saja.</p>
+                        <a href="https://fatih-space.github.io/cerpen/index.html" target="_blank" rel="noopener noreferrer" class="gradient-text font-semibold text-sm">
+                            Kunjungi Situs <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-xl card-hover">
+                    <div class="h-40 sm:h-48 bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center">
+                        <i class="fas fa-clock text-white text-5xl sm:text-6xl"></i>
+                    </div>
+                    <div class="p-4 sm:p-6">
+                        <div class="flex items-center gap-2 text-xs sm:text-sm text-gray-500 mb-3">
+                            <i class="fas fa-calendar"></i>
+                            <span>Segera Hadir</span>
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3">Fitur Baru Sedang Disiapkan</h3>
+                        <p class="text-gray-600 mb-4 text-xs sm:text-sm">Kami sedang menyiapkan sesuatu yang spesial untuk kamu. Nantikan pembaruan yang lebih keren!</p>
+                        <span class="gradient-text font-semibold text-sm">
+                            Coming Soon <i class="fas fa-hourglass-half ml-1 text-xs"></i>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════ GALLERY ══════════════ -->
+    <section id="gallery" class="py-16 sm:py-20 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-8 sm:mb-10">
+                <h2 class="text-3xl sm:text-4xl font-bold gradient-text mb-4 pb-1">Galeri Aktivitas</h2>
+            </div>
+
+            <div class="text-center mb-6 sm:mb-8">
+                <button id="galToggleBtn"
+                    class="bg-gradient-to-r from-blue-800 to-blue-900 text-white px-6 sm:px-8 py-3 rounded-full font-semibold hover:from-blue-700 hover:to-blue-800 shadow-lg hover:shadow-xl inline-flex items-center gap-3 transition-all duration-300 text-sm sm:text-base">
+                    <span id="galBtnText">Lihat Galeri Foto</span>
+                    <i id="galChevron" class="fas fa-chevron-down transition-transform duration-300"></i>
+                </button>
+            </div>
+
+            <div id="galPanel" class="more-projects">
+                <div id="galGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 pb-4"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="galLightbox"
+        style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.78);
+               backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:16px;">
+        <div style="background:#fff;border-radius:18px;padding:16px;
+                    width:min(520px, calc(100vw - 32px));
+                    position:relative;animation:galPop .25s cubic-bezier(.34,1.56,.64,1);
+                    box-shadow:0 40px 100px rgba(0,0,0,.3);">
+            <button id="galLbClose"
+                style="position:absolute;top:-12px;right:-12px;width:30px;height:30px;border-radius:50%;
+                       background:#fff;border:1.5px solid #e0e4ec;font-size:13px;cursor:pointer;
+                       display:flex;align-items:center;justify-content:center;color:#374151;
+                       box-shadow:0 2px 8px rgba(0,0,0,.1);">✕</button>
+            <div id="galLbBody"
+                style="width:100%;aspect-ratio:1/1;border-radius:10px;overflow:hidden;background:#f3f5f7;
+                       display:flex;align-items:center;justify-content:center;"></div>
+            <div id="galLbCap"
+                style="margin-top:10px;text-align:center;font-size:13px;font-weight:600;color:#374151;"></div>
+        </div>
+    </div>
+
+    <!-- ══════════════ CONTACT ══════════════ -->
+    <section id="contact" class="py-16 sm:py-20 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-10 sm:mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold gradient-text mb-4 pb-1">Hubungi Saya</h2>
+            </div>
+            <div class="max-w-2xl mx-auto text-center">
+                <div class="flex justify-center gap-4 sm:gap-6 flex-wrap mb-8">
+                    <a href="https://wa.me/6285934408764?text=Halo%20Fatih,%20saya%20ingin%20bertanya%20tentang..." class="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full contact-btn">
+                        <i class="fab fa-whatsapp text-lg sm:text-xl"></i>
+                    </a>
+                    <a href="mailto:fatihnurrosyid@gmail.com" class="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full contact-btn">
+                        <i class="fas fa-envelope text-lg sm:text-xl"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/muhammadfatihnurrosyid" class="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full contact-btn">
+                        <i class="fab fa-linkedin text-lg sm:text-xl"></i>
+                    </a>
+                    <a href="https://github.com/fatih-space" class="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full contact-btn">
+                        <i class="fab fa-github text-lg sm:text-xl"></i>
+                    </a>
+                    <a href="https://www.instagram.com/faithnrr/" class="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full contact-btn">
+                        <i class="fab fa-instagram text-lg sm:text-xl"></i>
+                    </a>
+                    <a href="https://discord.com/users/1416381357667520604" class="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full contact-btn">
+                        <i class="fab fa-discord text-lg sm:text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════ FOOTER ══════════════ -->
+    <footer class="bg-gray-900 text-white py-10 sm:py-12">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h3 class="text-base sm:text-lg font-semibold mb-4">Muhammad Fatih Nur Rosyid</h3>
+                    <a href="mailto:fatihnurrosyid@gmail.com" class="text-gray-400 text-sm">fatihnurrosyid@gmail.com</a>
+                    <p class="text-gray-400 text-sm mt-1">Yogyakarta.</p>
+                </div>
+                <div>
+                    <h4 class="text-base sm:text-lg font-semibold mb-4">Kategori</h4>
+                    <div class="space-y-2 text-sm">
+                        <a href="#home" class="block text-gray-400 hover:text-white transition">Mechatronics</a>
+                        <a href="#home" class="block text-gray-400 hover:text-white transition">Industrial Maintenance</a>
+                        <a href="#home" class="block text-gray-400 hover:text-white transition">Mechanical Engineering</a>
+                        <a href="#home" class="block text-gray-400 hover:text-white transition">Technology</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-base sm:text-lg font-semibold mb-4">Quick Links</h4>
+                    <div class="space-y-2 text-sm">
+                        <a href="#home"      class="block text-gray-400 hover:text-white transition">Beranda</a>
+                        <a href="#about"     class="block text-gray-400 hover:text-white transition">Tentang</a>
+                        <a href="#portfolio" class="block text-gray-400 hover:text-white transition">Portfolio</a>
+                        <a href="#education" class="block text-gray-400 hover:text-white transition">Education</a>
+                        <a href="#blog"      class="block text-gray-400 hover:text-white transition">Blog</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-400 text-xs sm:text-sm">
+                <p>Created by <span class="name-foot">Muhammad Fatih</span>, Built with <a href="https://tailwindcss.com" class="text-blue-500">Tailwind CSS</a>. AI Assisted.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+        </svg>
+    </button>
+
+    <!-- ══════════════ SCRIPTS ══════════════ -->
+    <script>
+        /* ── Mobile menu ── */
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu    = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+        /* ── Smooth scroll with navbar offset ── */
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+            });
+        });
+
+        /* ── Navbar shadow on scroll ── */
+        window.addEventListener('scroll', () => {
+            document.querySelector('nav').classList.toggle('shadow-md', window.scrollY > 100);
+            document.getElementById('scrollToTop').classList.toggle('show', window.pageYOffset > 300);
+        });
+
+        /* ── Scroll to top ── */
+        document.getElementById('scrollToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        /* ── Expand projects ── */
+        const expandBtn   = document.getElementById('expandBtn');
+        const moreProjects = document.getElementById('moreProjects');
+        const btnText     = document.getElementById('btnText');
+        let isExpanded = false;
+        expandBtn.addEventListener('click', () => {
+            isExpanded = !isExpanded;
+            moreProjects.classList.toggle('show', isExpanded);
+            btnText.textContent = isExpanded ? 'Sembunyikan Project' : 'Lihat Project Lainnya';
+            expandBtn.classList.toggle('active', isExpanded);
+        });
+
+        /* ── Gallery ── */
+        (function() {
+            const galPhotos = [
+                { src:'foto/1.jpg',  cap:'Komponen elektronik' },
+                { src:'foto/2.jpg',  cap:'Pengukuran dengan jangka sorong' },
+                { src:'foto/3.jpg',  cap:'Sistem pneumatik' },
+                { src:'foto/4.jpg',  cap:'Benda kerja' },
+                { src:'foto/5.jpg',  cap:'Workplace' },
+                { src:'foto/6.jpg',  cap:'Mikro kontroler' },
+                { src:'foto/7.jpg',  cap:'Assembly hammer' },
+                { src:'foto/8.jpg',  cap:'Proses heat treatment (bara api)' },
+                { src:'foto/9.jpg',  cap:'Kunjungan industri (Pocari Sweat)' },
+                { src:'foto/10.jpg', cap:'Kunjungan industri (Yakult)' },
+                { src:'foto/11.jpg', cap:'Praktisi industri' },
+                { src:'foto/12.jpg', cap:'Sistem electro-pneumatik' },
+                { src:'foto/13.png', cap:'Web programing' },
+                { src:'foto/14.png', cap:'Desain CAD 3D' },
+                { src:'foto/15.png', cap:'Rangkaian pneumatik' },
+                { src:'foto/16.png', cap:'Rangkaian elektro-pneumatik' },
+                { src:'foto/17.jpg', cap:'Trainer mechatronics system' },
+                { src:'foto/18.jpg', cap:'Pemrograman PLC' },
+                { src:'foto/19.jpg', cap:'Gambar teknik manual' },
+                { src:'foto/20.jpg', cap:'Teknik listrik' },
+                { src:'foto/21.jpg', cap:'Mesin bubut/lathe' },
+                { src:'foto/22.jpg', cap:'Web IOT' },
+                { src:'foto/23.jpg', cap:'Programing' },
+                { src:'foto/24.jpg', cap:'Sistem transmisi gerak' },
+                { src:'foto/25.jpg', cap:'Mesin Milling' },
+                { src:'foto/26.jpg', cap:'Welding' },
+                { src:'foto/27.jpg', cap:'SMTI Student' },
+            ];
+            const galGradients = [
+                'from-blue-400 to-indigo-500','from-orange-400 to-red-500',
+                'from-green-400 to-teal-500','from-yellow-400 to-orange-500',
+                'from-purple-400 to-pink-500','from-green-400 to-yellow-500',
+                'from-indigo-400 to-purple-500','from-cyan-400 to-blue-500',
+                'from-pink-400 to-rose-500','from-teal-400 to-green-500',
+                'from-red-400 to-orange-500','from-blue-400 to-cyan-500',
+            ];
+
+            const galGrid = document.getElementById('galGrid');
+            galPhotos.forEach(function(p, i) {
+                const card = document.createElement('div');
+                card.className = 'gal-card bg-white rounded-xl overflow-hidden shadow-xl card-hover';
+                card.style.cursor = 'pointer';
+                card.onclick = function() { galOpenLb(i); };
+
+                const top = document.createElement('div');
+                top.className = 'h-40 sm:h-48 bg-gradient-to-br ' + galGradients[i % galGradients.length]
+                              + ' flex items-center justify-center relative overflow-hidden';
+                top.style.height = '160px';
+
+                top.innerHTML = p.src
+                    ? '<img class="gal-card-img" src="' + p.src + '" alt="' + p.cap + '">'
+                      + '<div class="gal-cap-overlay"><span style="font-size:12px;font-weight:600;color:#fff;">' + p.cap + '</span></div>'
+                    : '<i class="fas fa-image text-white text-6xl opacity-60"></i>'
+                      + '<div class="gal-cap-overlay"><span style="font-size:12px;font-weight:600;color:#fff;">' + p.cap + '</span></div>';
+
+                const body = document.createElement('div');
+                body.className = 'p-4 sm:p-6';
+                body.innerHTML = '<h3 class="text-base sm:text-xl font-bold mb-2">' + p.cap + '</h3>'
+                               + '<p class="text-gray-500 text-xs sm:text-sm">Aktivitas SMK-SMTI Yogyakarta · Teknik Mekatronika</p>';
+
+                card.appendChild(top); card.appendChild(body);
+                galGrid.appendChild(card);
+            });
+
+            /* Toggle */
+            var galOpen = false;
+            document.getElementById('galToggleBtn').addEventListener('click', function() {
+                galOpen = !galOpen;
+                document.getElementById('galPanel').classList.toggle('show', galOpen);
+                document.getElementById('galBtnText').textContent = galOpen ? 'Sembunyikan Galeri' : 'Lihat Galeri Foto';
+                document.getElementById('galChevron').style.transform = galOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+            });
+
+            /* Lightbox */
+            function galOpenLb(i) {
+                var p = galPhotos[i];
+                var lb   = document.getElementById('galLightbox');
+                var body = document.getElementById('galLbBody');
+                var cap  = document.getElementById('galLbCap');
+                body.innerHTML = p.src
+                    ? '<img class="gal-lb-img" src="' + p.src + '" alt="' + p.cap + '">'
+                    : '<div class="gal-lb-ph"><i class="fas fa-image" style="font-size:48px;color:#ced3dc;"></i><p style="font-size:13px;color:#b0b8c8;font-weight:500;">' + p.cap + '</p></div>';
+                cap.textContent = p.cap;
+                lb.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+            function galCloseLb() {
+                document.getElementById('galLightbox').style.display = 'none';
+                document.body.style.overflow = '';
+            }
+            document.getElementById('galLbClose').addEventListener('click', galCloseLb);
+            document.getElementById('galLightbox').addEventListener('click', function(e) { if (e.target === this) galCloseLb(); });
+            document.addEventListener('keydown', function(e) { if (e.key === 'Escape') galCloseLb(); });
+        })();
+    </script>
+</body>
+</html>
